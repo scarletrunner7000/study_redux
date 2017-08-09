@@ -1,0 +1,3 @@
+const INPUT_NUMBER = 'INPUT_NUMBER';
+const PLUS = 'PLUS';
+
