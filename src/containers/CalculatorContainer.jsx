@@ -1,4 +1,7 @@
 import React from 'react';
+import NumBtn from '../components/NumBtn';
+import PlusBtn from '../components/PlusBtn';
+import Result from '../components/Result';
 
 
 class CalculatorContainer extends React.Component {
@@ -6,26 +9,26 @@ class CalculatorContainer extends React.Component {
     return (
       <div>
         <div>
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
+          <NumBtn n={1} />
+          <NumBtn n={2} />
+          <NumBtn n={3} />
         </div>
         <div>
-          <button>4</button>
-          <button>5</button>
-          <button>6</button>
+          <NumBtn n={4} />
+          <NumBtn n={5} />
+          <NumBtn n={6} />
         </div>
         <div>
-          <button>7</button>
-          <button>8</button>
-          <button>9</button>
+          <NumBtn n={7} />
+          <NumBtn n={8} />
+          <NumBtn n={9} />
         </div>
         <div>
-          <button>0</button>
-          <button>+</button>
+          <NumBtn n={0} />
+          <PlusBtn />
         </div>
         <div>
-          Result: <span>some value</span>
+          <Result />
         </div>
       </div>
     );
