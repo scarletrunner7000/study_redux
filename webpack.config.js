@@ -23,7 +23,7 @@ module.exports = {
     rules: [
       {
         enforce: 'pre',
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: nodeModulePath,
         loader: 'eslint-loader',
         options: {
@@ -38,7 +38,8 @@ module.exports = {
           presets: [
             ['es2015', { modules: false }],
             'react'
-          ]
+          ],
+          plugins: ['transform-object-rest-spread'],
         }
       },
       {
