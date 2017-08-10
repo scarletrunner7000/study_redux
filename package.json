@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rm -Rf dist && NODE_ENV=production webpack --config webpack.config.js --progress --profile",
     "start": "rm -Rf dist && webpack-dev-server --config webpack.config.js",
-    "lint": "eslint --fix app || exit 0"
+    "lint": "eslint --ext .jsx,.js --fix ./src || exit 0"
   },
   "repository": {
     "type": "git",

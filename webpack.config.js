@@ -10,7 +10,7 @@ const nodeModulePath = path.resolve(path.dirname(__dirname), 'node_modules');
 
 module.exports = {
   entry: {
-    'app': ['./src/index.jsx'],
+    app: ['./src/index.jsx'],
     vendor: Object.keys(require('./package.json').dependencies).concat([
       // 'bootstrap/dist/css/bootstrap.css'
     ])
