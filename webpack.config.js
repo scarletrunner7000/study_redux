@@ -5,14 +5,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const NODE_PROD = (NODE_ENV === 'production');
-const filename = NODE_PROD ? '[name]-[chunkhash:7].bundle' : '[name].bundle';
+const filename = NODE_PROD ? '[name]-[chunkhash:7].bundle' : '[name]-[chunkhash:7].bundle';
 const nodeModulePath = path.resolve(path.dirname(__dirname), 'node_modules');
 
 module.exports = {
   entry: {
     app: ['./src/index.jsx'],
     vendor: Object.keys(require('./package.json').dependencies).concat([
-      // 'bootstrap/dist/css/bootstrap.css'
+      'bootstrap/dist/css/bootstrap.css'
     ])
   },
   output: {
@@ -43,27 +43,30 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
+        test: /\.(css|scss)$/,
         use: ExtractTextWebpackPlugin.extract({
-          fallback: 'style-loader',
+          fallback: 'style-loader', // inject CSS to page
           use: [
             {
-              loader: 'css-loader',
+              loader: 'css-loader', // translates CSS into CommonJS modules
               options: {
                 importLoaders: 1
               }
             },
             {
-              loader: 'postcss-loader',
+              loader: 'postcss-loader', // Run post css actions
               options: {
                 parser: 'postcss-scss',
-                plugins: [
+                plugins: [ // post css plugins, can be exported to postcss.config.js
+                  require('precss'),
                   require('autoprefixer')({
                     browsers: ['last 2 versions']
                   }),
-                  // ...(NODE_PROD ? require('./postcss.plugins.production') : [])
                 ]
               }
+            },
+            {
+              loader: 'sass-loader' // compiles SASS to CSS
             }
           ]
         })
@@ -72,7 +75,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/,
         loader: 'file-loader',
         options: {
-          name: NODE_PROD ? '[name]-[hash:7].[ext]' : '[name].[ext]'
+          name: NODE_PROD ? '[name]-[hash:7].[ext]' : '[name]-[hash:7].[ext]'
         }
       }
     ]
@@ -89,6 +92,8 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Popper: ['popper.js', 'default'],
     }),
     new HtmlWebpackPlugin({
       title: 'Hello World!',
@@ -102,7 +107,6 @@ module.exports = {
     new ExtractTextWebpackPlugin(`${filename}.css`, {
       allChunks: true
     }),
-    // ...(NODE_PROD ? require('./plugins.production') : [])
   ],
   node: {
     __dirname: false,
